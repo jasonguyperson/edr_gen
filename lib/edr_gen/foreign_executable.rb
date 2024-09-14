@@ -14,10 +14,14 @@ class ForeignExecutable
 
   def call
     puts "  Running #{executable_path} with options: #{args} ..."
-    pid = Process.spawn(executable_path, *args)
-
-    puts "  Waiting for process #{pid} to finish..."
-    #Process.wait(pid)
+    begin
+      pid = Process.spawn(executable_path, *args)
+    rescue Errno::ENOENT => e
+      puts "  Process failed to start: #{e.message}"
+      return
+    end
+    puts "  Process started with PID: #{pid}"
+    return puts "  Process failed to start" unless pid
 
     # Fetch process information
     @process_info = ProcTable.ps(pid:)
@@ -41,11 +45,23 @@ class ForeignExecutable
 
   def log_data
     {
-      timestamp:,
-      username:     process_info&.uid,       # User ID (UID)
+      timestamp:    process_start_time,      # Process start time
+      username:     ENV["USER"],             # User who started the process
       process_name: process_info&.comm,      # Process name
       command_line: process_info&.cmdline,   # Command line
       process_id:   process_info&.pid        # Process ID
     }
+  end
+
+  def process_start_time
+    seconds = process_info&.start_tvsec
+
+    return "Unknown" unless seconds
+
+    Time.at(seconds)
+  end
+
+  def create_log_entry
+
   end
 end
