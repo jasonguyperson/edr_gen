@@ -2,7 +2,7 @@ require_relative 'lib/edr_gen/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'edr_gen'
-  spec.version       = EdrGen::VERSION
+  spec.version       = EDRGen::VERSION
   spec.authors       = ['Jason Loutensock']
   spec.summary       = 'A testing and logging tool for EDRs'
 

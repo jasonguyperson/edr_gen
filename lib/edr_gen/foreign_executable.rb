@@ -1,0 +1,3 @@
+module ForeignExecutable
+  # placeholder
+end

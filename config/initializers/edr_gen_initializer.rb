@@ -1,6 +1,4 @@
 # This is the initializer for the edr_gen gem. It requires all initializers and lib files.
-puts 'Initializing...'
-
 # Require all initializers
 current_initializer = File.expand_path(__FILE__)
 Dir[File.join(File.dirname(current_initializer), '**', '*.rb')].each do |file|

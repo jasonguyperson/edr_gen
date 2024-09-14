@@ -1,3 +1,0 @@
-module RunExecutable
-  # placeholder
-end
