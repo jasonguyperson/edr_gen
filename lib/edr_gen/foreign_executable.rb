@@ -1,3 +1,5 @@
+#frozen_string_literal: true
+
 require 'sys/proctable'
 
 # This class is used to run executables that are not part of this program.

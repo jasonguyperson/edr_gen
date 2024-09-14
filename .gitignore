@@ -1,3 +1,5 @@
 # JetBrains IDE
 /.idea
-/logs
+# leave the logs directory, but ignore all files in this directory
+!logs/
+logs/*
