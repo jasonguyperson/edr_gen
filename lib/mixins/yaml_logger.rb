@@ -37,10 +37,10 @@ module YamlLogger
   end
 
   def self.timestamp
-    Time.now.strftime("%Y-%m-%d:%H:%M:%S").to_s
+    Time.now.strftime("%Y-%m-%d:%H:%M:%S")
   end
 
   def self.today
-    Time.now.strftime("%Y_%m_%d").to_s
+    Time.now.strftime("%Y_%m_%d")
   end
 end
