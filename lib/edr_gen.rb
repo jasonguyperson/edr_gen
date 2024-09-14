@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 class EdrGen
-  include ForeignExecutable
-
-  HELP   = 'help'
-  EXEC   = 'exec'
-  CREATE = 'create'
-  DELETE = 'delete'
-  MODIFY = 'modify'
+  HELP    = 'help'
+  EXEC    = 'exec'
+  CREATE  = 'create'
+  DELETE  = 'delete'
+  MODIFY  = 'modify'
+  CONNECT = 'connect'
 
   def self.run(args)
     new(args).run
@@ -23,7 +22,15 @@ class EdrGen
     when HELP
       help_message
     when EXEC
-      ForeignExecutable.run(args[1..-1])
+      ForeignExecutable.call(path: command_arguments[0], options: command_arguments[1..-1])
+    when CREATE
+      puts "Creating file: #{command_arguments[0]}"
+    when MODIFY
+      puts "Modifying file: #{command_arguments[0]} with content: #{command_arguments[1]}"
+    when DELETE
+      puts "Deleting file: #{command_arguments[0]}"
+    when CONNECT
+      puts "Connecting to server: #{command_arguments[0]}"
     else
       puts 'Invalid command'
     end
@@ -37,11 +44,12 @@ class EdrGen
     puts <<-HEREDOC
       Usage:  edr_gen [command] [options]
 
-      #{HELP}                   Displays this message.
-      #{EXEC} [path] [options]  Executes a foreign executable file with optional flags.
-      #{CREATE} [path]          Creates a new file.
-      #{MODIFY} [path]          Modifies a file.
-      #{DELETE} [path]          Deletes a file.
+      #{HELP}                      Displays this help message.
+      #{EXEC}    <path> [options]  Runs a foreign executable file with optional flags.
+      #{CREATE}  <path>            Creates a new file.
+      #{MODIFY}  <path> <content>  Appends content to a file.
+      #{DELETE}  <path>            Deletes a file.
+      #{CONNECT} <path> [options]  Connects to a remote server.
     HEREDOC
   end
 end
