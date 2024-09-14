@@ -5,25 +5,12 @@ class ForeignExecutable < EdrGenBase
   ACTIVITY = "Process started"
 
   def initialize(args)
-    super()
-
-    @executable_path = args[0]
-    @args            = args[1..-1]
-    @process_info    = {}
+    super(args)
   end
 
   def call
+    puts "  Executing \"#{executable_path}\" with options: #{args} ..."
     execute_process
-
-    if process_info
-      logger.write(activity: ACTIVITY, data: common_log_data)
-    else
-      puts Rainbow("  Process not found, no logs have been generated").color(:red)
-    end
+    puts "  Process started with PID: #{pid}"
   end
-
-  private
-
-  attr_reader   :executable_path, :args
-  attr_accessor :process_info
 end

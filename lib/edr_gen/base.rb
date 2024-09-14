@@ -3,21 +3,28 @@
 require 'sys/proctable'
 require_relative './../mixins/yaml_logger'
 
+# Base class for EDR Generator
 class EdrGenBase
   include YamlLogger
   include Sys
 
-  def initialize
-    @logger = YamlLogger
-    @pid    = nil
+  class MissingActivityConstantError < StandardError; end
+
+  def initialize(args)
+    raise MissingActivityError, "Activity must be defined in the child class" unless defined? self.class::ACTIVITY
+
+    @logger          = YamlLogger
+    @pid             = nil
+    @process_info    = {}
+    @executable_path = args[0]
+    @args            = args[1..-1]
   end
 
   private
 
-  attr_accessor :logger, :pid
+  attr_accessor :logger, :pid, :process_info, :executable_path, :args
 
   def execute_process
-    puts "  Executing \"#{executable_path}\" with options: #{args} ..."
     begin
       @pid = Process.spawn(executable_path, *args)
 
@@ -27,7 +34,8 @@ class EdrGenBase
     rescue Errno::ENOENT => e
       puts Rainbow("  Process failed to start: #{e.message}").color(:red)
     end
-    puts "  Process started with PID: #{pid}"
+
+    write_log_entry
   end
 
   def common_log_data
@@ -47,5 +55,13 @@ class EdrGenBase
     return "Unknown" unless seconds
 
     Time.at(seconds, microseconds || 0)
+  end
+
+  def write_log_entry
+    if process_info
+      logger.write(activity: self.class::ACTIVITY, data: common_log_data)
+    else
+      puts Rainbow("  Process not found, no logs have been generated").color(:red)
+    end
   end
 end

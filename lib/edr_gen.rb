@@ -3,7 +3,7 @@
 class EdrGen
   HELP    = 'help'
   EXEC    = 'exec'
-  CREATE  = 'create'
+  CREATE  = 'touch'
   DELETE  = 'delete'
   MODIFY  = 'modify'
   CONNECT = 'connect'
@@ -24,7 +24,7 @@ class EdrGen
     when EXEC
       ForeignExecutable.new(command_arguments).call
     when CREATE
-      puts "Creating file: #{command_arguments[0]}"
+      CreateFile.new(command_arguments).call
     when MODIFY
       puts "Modifying file: #{command_arguments[0]} with content: #{command_arguments[1]}"
     when DELETE
@@ -47,7 +47,7 @@ class EdrGen
   
         #{HELP}                      Displays this help message.
         #{EXEC}    <path> [options]  Runs a foreign executable file with optional arguments.
-        #{CREATE}  <path>            Creates a new file.
+        #{CREATE}   <path>            Creates a new file.
         #{MODIFY}  <path> <content>  Appends content to a file.
         #{DELETE}  <path>            Deletes a file.
         #{CONNECT} <path> [options]  Connects to a remote server and transmits data.
