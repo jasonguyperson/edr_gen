@@ -1,10 +1,8 @@
-require_relative '../config/initializers/edr_gen_initializer'
+require './config/initializers/edr_gen_initializer'
 
-class EdrGen
-  class << self
-    def run(args)
-      puts "You passed in #{args.inspect}"
-      # Your code here
-    end
+module EdrGen
+  def self.run(args)
+    puts "You passed in #{args.inspect}"
+    # Your code here
   end
 end
