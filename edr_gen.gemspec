@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.name                  = 'edr_gen'
   spec.version               = EDRGen::VERSION
   spec.authors               = ['Jason Loutensock']
-  spec.summary               = 'A testing and logging tool for EDRs'
+  spec.summary               = 'A testing and mixins tool for EDRs'
   spec.files                 = Dir['lib/**/*', 'bin/*', 'Gemfile', 'README.md']
   spec.executables           = ['edr_gen']
   spec.require_paths         = %w[lib]

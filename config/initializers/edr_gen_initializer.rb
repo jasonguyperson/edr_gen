@@ -4,11 +4,14 @@
 current_initializer = File.expand_path(__FILE__)
 Dir[File.join(File.dirname(current_initializer), '**', '*.rb')].each do |file|
   require file unless File.expand_path(file) == current_initializer
+  puts "Requiring #{file}"
 end
 
 # Require all lib files
 lib_dir = File.expand_path('../../../lib', __FILE__)
-Dir[File.join(lib_dir, '**', '*.rb')].each { |file| require file }
+Dir[File.join(lib_dir, '**', '*.rb')].each { |file| require file; }
 
 # Global dependencies
 require 'rainbow'
+require 'time'
+require 'yaml'
