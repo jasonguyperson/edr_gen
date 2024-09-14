@@ -11,6 +11,6 @@ lib_dir = File.expand_path('../../../lib', __FILE__)
 Dir[File.join(lib_dir, '**', '*.rb')].each { |file| require file; }
 
 # Global dependencies
+require 'sys/proctable'
 require 'rainbow'
-require 'time'
 require 'yaml'
