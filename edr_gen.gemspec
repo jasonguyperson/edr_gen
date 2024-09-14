@@ -11,5 +11,6 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 3.3.0'
 
   # Dependencies
-  spec.add_dependency "sys-proctable", "~> 1.3"
+  spec.add_dependency 'sys-proctable', '~> 1.3'
+  spec.add_dependency 'rainbow', '~> 3.0'
 end

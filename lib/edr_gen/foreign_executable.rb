@@ -13,11 +13,11 @@ class ForeignExecutable
   end
 
   def call
-    puts "  Running #{executable_path} with options: #{args} ..."
+    puts "  Executing \"#{executable_path}\" with options: #{args} ..."
     begin
       pid = Process.spawn(executable_path, *args)
     rescue Errno::ENOENT => e
-      puts "  Process failed to start: #{e.message}"
+      puts Rainbow("  Process failed to start: #{e.message}").color(:red)
       return
     end
     puts "  Process started with PID: #{pid}"
@@ -28,7 +28,6 @@ class ForeignExecutable
 
     # Log details
     if process_info
-      puts log_data
       # Write to a log file (example)
       # File.open("process_log.txt", "a") do |file|
       #   file.puts log.to_s

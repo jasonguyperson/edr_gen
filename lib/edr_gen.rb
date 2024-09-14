@@ -32,7 +32,7 @@ class EdrGen
     when CONNECT
       puts "Connecting to server: #{command_arguments[0]}"
     else
-      puts 'Invalid command'
+      puts "Invalid command. For a list of valid commands, run #{Rainbow("edr_gen help").color(:yellow)}"
     end
   end
 
@@ -41,15 +41,17 @@ class EdrGen
   attr_reader :command, :command_arguments
 
   def help_message
-    puts <<-HEREDOC
-      Usage:  edr_gen [command] [options]
-
-      #{HELP}                      Displays this help message.
-      #{EXEC}    <path> [options]  Runs a foreign executable file with optional flags.
-      #{CREATE}  <path>            Creates a new file.
-      #{MODIFY}  <path> <content>  Appends content to a file.
-      #{DELETE}  <path>            Deletes a file.
-      #{CONNECT} <path> [options]  Connects to a remote server.
-    HEREDOC
+    puts Rainbow(
+      <<-HEREDOC
+        Usage:  edr_gen [command] [options]
+  
+        #{HELP}                      Displays this help message.
+        #{EXEC}    <path> [options]  Runs a foreign executable file with optional arguments.
+        #{CREATE}  <path>            Creates a new file.
+        #{MODIFY}  <path> <content>  Appends content to a file.
+        #{DELETE}  <path>            Deletes a file.
+        #{CONNECT} <path> [options]  Connects to a remote server and transmits data.
+      HEREDOC
+    ).color(:yellow)
   end
 end
