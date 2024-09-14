@@ -3,9 +3,10 @@ puts 'Initializing...'
 
 # Require all initializers
 current_initializer = File.expand_path(__FILE__)
-Dir[File.join(__dir__, 'initializers', '**', '*.rb')].each do |file|
+Dir[File.join(File.dirname(current_initializer), '**', '*.rb')].each do |file|
   require file unless File.expand_path(file) == current_initializer
 end
 
 # Require all lib files
-Dir[File.join(__dir__, 'lib', '**', '*.rb')].each { |file| require file }
+lib_dir = File.expand_path('../../../lib', __FILE__)
+Dir[File.join(lib_dir, '**', '*.rb')].each { |file| require file }

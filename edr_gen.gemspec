@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
 
   spec.files         = Dir['lib/**/*', 'bin/*', 'Gemfile', 'README.md']
   spec.executables   = ['edr_gen']
-  spec.require_paths = %w[lib bin config spec]
+  spec.require_paths = %w[lib]
 
   # spec.add_dependency "i18n", "~> 1.8"  # Add dependencies as needed
 end
