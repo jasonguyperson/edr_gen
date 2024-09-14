@@ -10,5 +10,6 @@ Gem::Specification.new do |spec|
   spec.require_paths         = %w[lib]
   spec.required_ruby_version = '>= 3.3.0'
 
-  # spec.add_dependency "i18n", "~> 1.8"  # Add dependencies as needed
+  # Dependencies
+  spec.add_dependency "sys-proctable", "~> 1.3"
 end
