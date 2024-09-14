@@ -8,3 +8,5 @@ end
 # Require all lib files
 lib_dir = File.expand_path('../../../lib', __FILE__)
 Dir[File.join(lib_dir, '**', '*.rb')].each { |file| require file }
+
+require 'pry'

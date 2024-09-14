@@ -1,11 +1,24 @@
 class ForeignExecutable
-  def self.call(path:, options:)
-    puts "Running #{path} with options: #{options}"
+  def initialize(args)
+    @args = args
+  end
+
+  def call
+    command = args.join(' ')
+    success = system(command)
+
+    if success
+      puts "Process completed successfully."
+    else
+      puts "Process failed."
+    end
   end
 
   private
 
-  def message(path:, options:)
+  attr_reader :args
+
+  def message
     puts "Running #{path} with options: #{options}"
   end
 end

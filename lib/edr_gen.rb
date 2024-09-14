@@ -22,7 +22,7 @@ class EdrGen
     when HELP
       help_message
     when EXEC
-      ForeignExecutable.call(path: command_arguments[0], options: command_arguments[1..-1])
+      ForeignExecutable.new(command_arguments).call
     when CREATE
       puts "Creating file: #{command_arguments[0]}"
     when MODIFY
