@@ -4,7 +4,5 @@ source 'https://rubygems.org'
 gemspec
 
 # Development dependencies
-group :development, :test do
-  gem 'pry'
-  gem 'rspec'
-end
+gem 'pry'
+gem 'rspec'
