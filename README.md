@@ -1,4 +1,8 @@
-## Installation
+## Configuration
+### Dependencies
+  - Ruby 3.3.0 or higher
+
+### Installation
   ```bash
   gem install edr_gen
   ```
