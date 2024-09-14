@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'edr_gen'
+
+EdrGen.run(ARGV)
