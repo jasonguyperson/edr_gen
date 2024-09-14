@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
 
-require './config/initializers/edr_gen_initializer'
+require File.expand_path('../config/initializers/edr_gen_initializer', __dir__)
 
 EdrGen.run(ARGV)
