@@ -57,10 +57,11 @@ class ForeignExecutable < EdrGenBase
   end
 
   def process_start_time
-    seconds = process_info&.start_tvsec
+    seconds      = process_info&.start_tvsec
+    microseconds = process_info&.start_tvusec
 
     return "Unknown" unless seconds
 
-    Time.at(seconds)
+    Time.at(seconds, microseconds || 0)
   end
 end

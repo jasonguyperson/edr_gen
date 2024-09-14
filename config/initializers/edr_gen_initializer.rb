@@ -4,7 +4,6 @@
 current_initializer = File.expand_path(__FILE__)
 Dir[File.join(File.dirname(current_initializer), '**', '*.rb')].each do |file|
   require file unless File.expand_path(file) == current_initializer
-  puts "Requiring #{file}"
 end
 
 # Require all lib files
