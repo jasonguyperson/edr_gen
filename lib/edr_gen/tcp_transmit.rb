@@ -3,8 +3,8 @@
 require 'json'
 require 'socket'
 
-# Used to transmit data to a server via a TCP socket connection.
-class MakeRequest < EdrGenBase
+# Used to transmit data to an open remote server via a TCP socket connection.
+class TcpTransmit < EdrGenBase
   ACTIVITY = 'transmit'
   TIMEOUT = 5
 
@@ -13,7 +13,7 @@ class MakeRequest < EdrGenBase
 
     @server_host  = args[0] || 'tcpbin.com'
     @server_port  = args[1] || 4242
-    @data_to_send = args[2] || 'placeholder data'
+    @data_to_send = args[2..-1]&.join(' ') || 'placeholder data'
     @process_info = ProcTable.ps(pid: Process.pid)
   end
 

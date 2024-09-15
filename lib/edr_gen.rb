@@ -30,7 +30,7 @@ class EdrGen
     when DELETE
       DeleteFile.new(command_arguments).call
     when TRANSMIT
-      MakeRequest.new(command_arguments).call
+      TcpTransmit.new(command_arguments).call
     else
       puts "Invalid command. For a list of valid commands, run #{Rainbow("edr_gen help").color(:yellow)}"
     end
@@ -46,11 +46,12 @@ class EdrGen
         Usage:  edr_gen [command] [options]
   
         #{HELP}                         Displays this help message.
-        #{EXEC}    <path> [options]     Runs a foreign executable file with optional arguments.
-        #{CREATE}  <path>               Creates a new file.
-        #{MODIFY}  <path> <content>     Appends content to a file.
-        #{DELETE}  <path>               Deletes a file.
-        #{TRANSMIT} <url> <port> <data> Initiates a simple TCP socket connection and transmits the data.
+        #{EXEC}     <path> [options]    Runs a foreign executable file with optional arguments.
+        #{CREATE}   <path>              Creates a new file.
+        #{MODIFY}   <path> <content>    Appends content to a file.
+        #{DELETE}   <path>              Deletes a file.
+        #{TRANSMIT} <url> <port> <data> Initiates a simple TCP socket connection and transmits data. 
+                                        Defaults to tcpbin.com:4242 with placeholder data.
       HEREDOC
     ).color(:yellow)
   end
