@@ -8,6 +8,8 @@ class MakeRequest < EdrGenBase
   ACTIVITY = 'transmit'
 
   def initialize(args)
+    super(args)
+
     @server_host  = args[0] || 'socat.org'
     @server_port  = args[1] || 7
     @data_to_send = args[2] || 'placeholder data'
@@ -16,76 +18,32 @@ class MakeRequest < EdrGenBase
 
   def call
     puts "  Initiating request..."
-    #perform_network_activity
-    # execute_process
-    # @request_data = get_network_info(pid)
-    #
+    connect_and_transmit
+    write_log_entry
   end
 
   private
 
-  attr_reader :server_host, :server_port, :data_to_send
+  attr_reader :server_host, :server_port, :data_to_send, :process_info, :bytes_sent, :source, :destination
 
-  def perform_network_activity
-    timestamp = Time.now
-    username = ENV['USER'] || ENV['USERNAME'] || 'Unknown User'
-    process_name = $PROGRAM_NAME
-    process_id = Process.pid
-    command_line = "#{$PROGRAM_NAME} #{ARGV.join(' ')}"
-
-    # Create a TCP socket and connect to the server
+  def connect_and_transmit
     socket = TCPSocket.new(server_host, server_port)
 
-    # Get local (source) address and port
-    local_address = socket.local_address.ip_address
-    local_port = socket.local_address.ip_port
+    @source = "#{socket.local_address.ip_address}:#{socket.local_address.ip_port}"
+    @destination = "#{socket.remote_address.ip_address}:#{socket.remote_address.ip_port}"
+    @bytes_sent = socket.write(data_to_send)
+    puts Rainbow("  #{socket.read}").color(:green)
 
-    # Get remote (destination) address and port
-    remote_address = socket.remote_address.ip_address
-    remote_port = socket.remote_address.ip_port
-
-    # Send data
-    bytes_sent = socket.write(data_to_send)
-
-    # Protocol used
-    protocol = 'TCP'
-
-    # Close the socket
     socket.close
-
-    # Log the activity
-    log_entry = {
-      timestamp: timestamp,
-      username: username,
-      process_name: process_name,
-      command_line: command_line,
-      process_id: process_id,
-      source_address: local_address,
-      source_port: local_port,
-      destination_address: remote_address,
-      destination_port: remote_port,
-      data_sent: bytes_sent,
-      protocol: protocol
-    }
-
-    # Write the log entry to a file
-    File.open('network_activity.log', 'a') do |file|
-      file.puts log_entry.to_json
-    end
   rescue StandardError => e
-    puts "An error occurred: #{e.message}"
+    abort(Rainbow("  An error occurred: #{e.message}").color(:red))
+  end
+
+  def log_data
+    common_log_data.merge(request_data)
   end
 
   def request_data
-    {
-      destination: "placeholder",
-      source: "placeholder",
-      data_size: "placeholder",
-      protocol: "placeholder",
-    }
+    { destination:, source:, data_size: "#{bytes_sent} bytes", protocol: "TCP" }
   end
-
-  # def log_data
-  #   common_log_data.merge(request_data)
-  # end
 end
