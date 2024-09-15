@@ -6,7 +6,7 @@ class EdrGen
   CREATE  = 'create'
   DELETE  = 'delete'
   MODIFY  = 'modify'
-  CONNECT = 'connect'
+  REQUEST = 'request'
 
   def self.run(args)
     new(args).run
@@ -29,8 +29,8 @@ class EdrGen
       ModifyFile.new(command_arguments).call
     when DELETE
       DeleteFile.new(command_arguments).call
-    when CONNECT
-      puts "Connecting to server: #{command_arguments[0]}"
+    when REQUEST
+      MakeRequest.new(command_arguments).call
     else
       puts "Invalid command. For a list of valid commands, run #{Rainbow("edr_gen help").color(:yellow)}"
     end

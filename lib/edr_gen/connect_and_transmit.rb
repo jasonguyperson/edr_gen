@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-# This class is used making a request.
-class DeleteFile < EdrGenBase
+class MakeRequest < EdrGenBase
   ACTIVITY = "file_changes"
 
   def initialize(args)

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# This class is used to modify existing files.
 class ModifyFile < EdrGenBase
   ACTIVITY = "file_changes"
 

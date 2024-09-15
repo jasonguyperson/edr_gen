@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# This class is used to create files.
 class CreateFile < EdrGenBase
   ACTIVITY = "file_changes"
 

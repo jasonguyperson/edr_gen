@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# This class is used to delete existing files.
 class DeleteFile < EdrGenBase
   ACTIVITY = "file_changes"
 
