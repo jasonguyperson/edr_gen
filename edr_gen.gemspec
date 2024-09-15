@@ -16,5 +16,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'sys-proctable', '~> 1.3'
   spec.add_dependency 'rainbow', '~> 3.0'
   spec.add_dependency 'yaml', '~> 0.1'
-  spec.add_dependency 'open3', '~> 0.1'
+  spec.add_dependency 'httparty', '~> 0.19'
 end

@@ -14,3 +14,4 @@ Dir[File.join(lib_dir, '**', '*.rb')].each { |file| require file; }
 require 'sys/proctable'
 require 'rainbow'
 require 'yaml'
+require 'httparty'

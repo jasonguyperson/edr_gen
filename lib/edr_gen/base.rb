@@ -8,10 +8,10 @@ class EdrGenBase
   include YamlLogger
   include Sys
 
-  class MissingActivityConstantError < StandardError; end
+  class EdrGenMissingDependencyError < StandardError; end
 
   def initialize(args)
-    raise MissingActivityConstantError, "Activity must be defined in the child class" unless defined? self.class::ACTIVITY
+    raise EdrGenMissingDependencyError, "ACTIVITY constant must be defined in the child class" unless defined? self.class::ACTIVITY
 
     @logger       = YamlLogger
     @pid          = nil
@@ -42,11 +42,11 @@ class EdrGenBase
 
   def common_log_data
     {
-      timestamp:    process_start_time,    # Process start time
-      username:     ENV["USER"],           # User who started the process
-      process_name: process_info&.comm,    # Process name
-      command_line: process_info&.cmdline, # Command line
-      process_id:   process_info&.pid,     # Process ID
+      timestamp:    process_start_time,                               # Process start time
+      username:     ENV['USER'] || ENV['USERNAME'] || 'Unknown User', # User who started the process
+      process_name: process_info&.comm,                               # Process name
+      command_line: process_info&.cmdline,                            # Command line
+      process_id:   process_info&.pid,                                # Process ID
     }
   end
 

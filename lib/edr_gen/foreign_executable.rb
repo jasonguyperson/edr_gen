@@ -5,7 +5,7 @@ class ForeignExecutable < EdrGenBase
   ACTIVITY = "process_start"
 
   def initialize(args)
-    super(args)
+    # super(args)
   end
 
   def call

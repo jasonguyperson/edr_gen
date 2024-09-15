@@ -13,7 +13,7 @@ class CreateFile < EdrGenBase
   end
 
   def call
-    puts "  Attempting to creating file..."
+    puts "  Attempting to create file..."
     execute_process
     puts "  File created: #{@args[0]}"
   end
