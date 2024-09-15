@@ -4,9 +4,7 @@ class MakeRequest < EdrGenBase
   ACTIVITY = "request"
 
   def initialize(args)
-    @command = args.empty? ? default_request : args
-
-    validate_args
+    command = args.empty? ? default_request : args
 
     super(command)
   end
@@ -17,12 +15,6 @@ class MakeRequest < EdrGenBase
   end
 
   private
-
-  attr_accessor :command
-
-  def validate_args
-    abort Rainbow("  No request provided.").color(:red) if command.nil?
-  end
 
   def request_data
     {
