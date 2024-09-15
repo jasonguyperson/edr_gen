@@ -47,10 +47,10 @@ class EdrGen
   
         #{HELP}                      Displays this help message.
         #{EXEC}    <path> [options]  Runs a foreign executable file with optional arguments.
-        #{CREATE}   <path>            Creates a new file.
+        #{CREATE}  <path>            Creates a new file.
         #{MODIFY}  <path> <content>  Appends content to a file.
         #{DELETE}  <path>            Deletes a file.
-        #{CONNECT} <path> [options]  Connects to a remote server and transmits data.
+        #{REQUEST} <path> [options]  Initiates a request to a URL.
       HEREDOC
     ).color(:yellow)
   end

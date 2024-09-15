@@ -5,8 +5,8 @@ class ModifyFile < EdrGenBase
 
   def initialize(args)
     @filepath = args[0]
-    content   = args[1..-1].join(" ")
-    command  = ["echo #{content || "default content"} >> #{@filepath}"]
+    @content  = args[1..-1].join(" ")
+    command   = ["echo #{new_content} >> #{filepath}"]
 
     validate_args
 
@@ -16,10 +16,17 @@ class ModifyFile < EdrGenBase
   def call
     puts "  Attempting to modify file..."
     execute_process
-    puts "  File modified: #{@filepath}"
+    puts "  File modified: #{filepath}"
   end
 
   private
+
+  attr_reader :filepath
+  attr_accessor :content
+
+  def new_content
+    content.empty? ? "default content" : content
+  end
 
   def validate_args
     abort Rainbow("  No filename provided. Please provide a filename.").color(:red) if @filepath.nil?
@@ -28,7 +35,7 @@ class ModifyFile < EdrGenBase
 
   def log_data
     common_log_data.merge({
-      filepath: File.expand_path(@filepath),
+      filepath: File.expand_path(filepath),
       activity: "modified",
     })
   end
