@@ -2,21 +2,34 @@
 
 # This class is used to create files.
 class CreateFile < EdrGenBase
-  ACTIVITY = "Created file"
+  ACTIVITY = "create"
 
   def initialize(args)
     @args = args
+
     validate_args
+    set_command
+
     super(@args.slice(0..1))
   end
 
   def call
+    puts "  Attempting to creating file..."
     execute_process
+    puts "  File created: #{@args[0]}"
   end
 
   private
 
   def validate_args
-    abort Rainbow("  No filename provided. Please provide a filename.").color(:red) if @args[1].nil?
+    abort Rainbow("  No filename provided. Please provide a filename.").color(:red) if @args[0].nil?
+  end
+
+  def set_command
+    @args.unshift("touch")
+  end
+
+  def log_data
+    common_log_data.merge({ filepath: File.expand_path(@args[0]) })
   end
 end

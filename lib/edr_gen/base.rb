@@ -11,28 +11,30 @@ class EdrGenBase
   class MissingActivityConstantError < StandardError; end
 
   def initialize(args)
-    raise MissingActivityError, "Activity must be defined in the child class" unless defined? self.class::ACTIVITY
+    raise MissingActivityConstantError, "Activity must be defined in the child class" unless defined? self.class::ACTIVITY
 
-    @logger          = YamlLogger
-    @pid             = nil
-    @process_info    = {}
-    @executable_path = args[0]
-    @args            = args[1..-1]
+    @logger       = YamlLogger
+    @pid          = nil
+    @process_info = {}
+    @path         = args[0]
+    @args         = args[1..-1]
   end
 
   private
 
-  attr_accessor :logger, :pid, :process_info, :executable_path, :args
+  attr_accessor :logger, :pid, :process_info, :path, :args
 
   def execute_process
     begin
-      @pid = Process.spawn(executable_path, *args)
+      @pid = Process.spawn(path, *args)
 
       return puts Rainbow("  Process not found").color(:red) unless pid
 
       @process_info = ProcTable.ps(pid:)
+
+      Process.detach(pid)
     rescue Errno::ENOENT => e
-      puts Rainbow("  Process failed to start: #{e.message}").color(:red)
+      puts Rainbow("  Failed to execute command: #{e.message}").color(:red)
     end
 
     write_log_entry
@@ -59,7 +61,7 @@ class EdrGenBase
 
   def write_log_entry
     if process_info
-      logger.write(activity: self.class::ACTIVITY, data: common_log_data)
+      logger.write(activity: self.class::ACTIVITY, data: log_data)
     else
       puts Rainbow("  Process not found, no logs have been generated").color(:red)
     end

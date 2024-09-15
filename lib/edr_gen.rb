@@ -3,7 +3,7 @@
 class EdrGen
   HELP    = 'help'
   EXEC    = 'exec'
-  CREATE  = 'touch'
+  CREATE  = 'create'
   DELETE  = 'delete'
   MODIFY  = 'modify'
   CONNECT = 'connect'
