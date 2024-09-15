@@ -6,7 +6,6 @@ Gem::Specification.new do |spec|
   spec.authors               = ['Jason Loutensock']
   spec.summary               = 'A testing and mixins tool for EDRs'
   spec.files                 = Dir.glob("config/initializers/**") + Dir.glob("lib/**/*") + Dir.glob("bin/*")
-
   spec.executables           = ['edr_gen']
   spec.require_paths         = %w[lib]
   spec.required_ruby_version = '>= 3.3.0'
