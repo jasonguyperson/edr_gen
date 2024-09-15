@@ -46,7 +46,7 @@ class EdrGenBase
       username:     ENV["USER"],           # User who started the process
       process_name: process_info&.comm,    # Process name
       command_line: process_info&.cmdline, # Command line
-      process_id:   process_info&.pid      # Process ID
+      process_id:   process_info&.pid,     # Process ID
     }
   end
 

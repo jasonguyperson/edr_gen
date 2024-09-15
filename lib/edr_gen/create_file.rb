@@ -2,7 +2,7 @@
 
 # This class is used to create files.
 class CreateFile < EdrGenBase
-  ACTIVITY = "create"
+  ACTIVITY = "file_changes"
 
   def initialize(args)
     @args = args
@@ -30,6 +30,9 @@ class CreateFile < EdrGenBase
   end
 
   def log_data
-    common_log_data.merge({ filepath: File.expand_path(@args[0]) })
+    common_log_data.merge({
+      filepath: File.expand_path(@args[0]),
+      activity: "created",
+    })
   end
 end

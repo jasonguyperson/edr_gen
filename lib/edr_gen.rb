@@ -26,9 +26,9 @@ class EdrGen
     when CREATE
       CreateFile.new(command_arguments).call
     when MODIFY
-      puts "Modifying file: #{command_arguments[0]} with content: #{command_arguments[1]}"
+      ModifyFile.new(command_arguments).call
     when DELETE
-      puts "Deleting file: #{command_arguments[0]}"
+      DeleteFile.new(command_arguments).call
     when CONNECT
       puts "Connecting to server: #{command_arguments[0]}"
     else
