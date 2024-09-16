@@ -96,3 +96,5 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 end
+
+require File.expand_path('../config/initializers/edr_gen_initializer', __dir__)
