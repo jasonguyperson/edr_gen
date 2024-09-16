@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'etc'
 require 'sys/proctable'
 require_relative './../mixins/yaml_logger'
 
@@ -57,12 +58,17 @@ class EdrGenBase
       microseconds = process_info.start_tvusec || 0
       Time.at(seconds, microseconds)
     elsif process_info.respond_to?(:starttime)
-      # Linux
-      clock_ticks = Sys::ProcTable.clock_ticks
-      start_time_in_seconds = process_info.starttime.to_f / clock_ticks
-      Time.at(start_time_in_seconds)
+      clock_ticks_per_second = Etc.sysconf(Etc::SC_CLK_TCK)
+      start_time_in_seconds = process_info.starttime.to_f / clock_ticks_per_second
+
+      uptime_seconds = File.read('/proc/uptime').split[0].to_f
+
+      boot_time = Time.now - uptime_seconds
+      process_start_time = boot_time + start_time_in_seconds
+
+      Time.at(process_start_time)
     else
-      "Unknown"
+      'Unknown'
     end
   end
 
