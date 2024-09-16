@@ -51,12 +51,19 @@ class EdrGenBase
   end
 
   def process_start_time
-    seconds      = process_info&.start_tvsec
-    microseconds = process_info&.start_tvusec
-
-    return "Unknown" unless seconds
-
-    Time.at(seconds, microseconds || 0)
+    if process_info.respond_to?(:start_tvsec)
+      # macOS
+      seconds      = process_info.start_tvsec
+      microseconds = process_info.start_tvusec || 0
+      Time.at(seconds, microseconds)
+    elsif process_info.respond_to?(:starttime)
+      # Linux
+      clock_ticks = Sys::ProcTable.clock_ticks
+      start_time_in_seconds = process_info.starttime.to_f / clock_ticks
+      Time.at(start_time_in_seconds)
+    else
+      "Unknown"
+    end
   end
 
   def write_log_entry

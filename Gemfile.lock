@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    edr_gen (0.0.0)
+    edr_gen (0.0.3)
       httparty (~> 0.19)
       rainbow (~> 3.0)
       sys-proctable (~> 1.3)
